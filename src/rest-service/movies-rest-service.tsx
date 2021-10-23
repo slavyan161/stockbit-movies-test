@@ -3,9 +3,6 @@ import { environment } from "./../react-app-env";
 
 export class MoviesRestService {
     private mainUrl = environment.ENDPOINTS.API_MAIN;
-    getAllMovies() {
-        return axios.get(`${this.mainUrl}&s=Batman`);
-    }
 
     getMoviesBySearch(searchParam: string) {
         return axios.get(`${this.mainUrl}&s=${searchParam}`)
@@ -16,7 +13,11 @@ export class MoviesRestService {
     }
 
     getMoviesByPage(search: string, page: number) {
-        return axios.get(`${this.mainUrl}&s=${search}&page=${page}`)
+        let pages: string = ''
+        if (page) {
+            pages = '&page=' + page;
+        }
+        return axios.get(`${this.mainUrl}&s=${search}${pages}`)
     }
 }
 

@@ -1,8 +1,7 @@
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import LayoutComponent from "./component/layouts/layout.component";
 import DetailComponent from './main/home/detail/detail.component'

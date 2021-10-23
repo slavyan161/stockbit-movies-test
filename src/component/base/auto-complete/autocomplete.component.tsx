@@ -49,6 +49,7 @@ function AutoCompleteComponent(props: IAutoComplete) {
                                 if (x && props.isFilter && props.filter) {
                                     return x[props?.filter?.filterVariable].toLowerCase().includes(props.searchString?.toLowerCase())
                                 }
+                                return x;
                             })
                             .map((option: any, index: number) => (
                                 <div

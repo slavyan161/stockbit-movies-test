@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import MoviesRestService from './../../rest-service/movies-rest-service'
 import './list-movies.component.css'
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchString, setShowOptions, setMovies, setModalData, setAutoCompleteData } from './../../redux/actions/index';
+import { setShowOptions, setMovies, setModalData, setAutoCompleteData } from './../../redux/actions/index';
 import AutoCompleteComponent from '../base/auto-complete/autocomplete.component';
 import ButtonComponent from '../base/button/button.component';
 
@@ -11,7 +11,8 @@ function ListMovies() {
     const moviesRestService: MoviesRestService = new MoviesRestService();
     const [page, setPage] = useState(1);
     const [isNoData, setIsNoData] = useState(false);
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isFristLoad, setIsFristLoad] = useState(false)
 
     const dispatch = useDispatch();
     const inputSelector = useSelector((state: any) => state.input);
@@ -27,7 +28,7 @@ function ListMovies() {
 
     useEffect(() => {
         setIsLoading(true)
-        moviesRestService.getMoviesByPage(inputSelector.searchString, page)
+        moviesRestService.getMoviesByPage(inputSelector.searchString, isFristLoad ? page : 0)
             .then((response: any) => {
                 if (response?.status === 200 && !response.data?.Error) {
                     const data: any = response.data.Search;
@@ -36,22 +37,22 @@ function ListMovies() {
                     setIsNoData(true);
                 }
             })
-            .catch(err => console.log(err))
+            .catch((err: any) => console.log(err))
             .finally(() => setIsLoading(false));
     }, [page])
 
     useEffect(() => {
         setIsLoading(true)
-        moviesRestService.getMoviesByPage(inputSelector.searchString, page)
+        moviesRestService.getMoviesByPage(inputSelector.searchString, isFristLoad ? page : 0)
             .then((response: any) => {
-                if (response.data) {
+                if (response?.status === 200 && !response.data?.Error) {
                     const data: any = response.data.Search;
                     dispatch(setAutoCompleteData(dataSelector.autoCompleteData.concat(data)))
-                } else if (response.Response == false) {
+                } else if (response?.data?.Error) {
                     setIsNoData(true);
                 }
             })
-            .catch(err => console.log(err))
+            .catch((err: any) => console.log(err))
             .finally(() => setIsLoading(false));
     }, [inputSelector.searchString])
 
@@ -66,7 +67,7 @@ function ListMovies() {
                         dispatch(setMovies(searchData))
                     }
                 })
-                .catch(err => console.log(err))
+                .catch((err: any) => console.log(err))
                 .finally(() => setIsLoading(false));
         }
     }

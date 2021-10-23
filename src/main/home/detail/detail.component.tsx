@@ -19,12 +19,12 @@ function DetailComponent() {
                 setMovieData(data);
             }
         });
-    }, [])
+    })
 
     return (
         <div className="container py-5">
             <h2>{movieData?.Title}</h2>
-            <img src={movieData?.Poster} />
+            <img src={movieData?.Poster} alt={movieData?.Title} />
 
             <div className="pt-4">
                 Genre : 
