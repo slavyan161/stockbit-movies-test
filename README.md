@@ -1,5 +1,5 @@
 # Stockbit React Movie Test
-A web-based application used to search movies based on [OMDB Api](http://www.omdbapi.com/) built with React, Redux, Axios, and TailwindCSS.
+A web-based application used to search movies based on [OMDB Api](http://www.omdbapi.com/) built with React, Redux, Axios, and Bootstrap.
 
 ## Installation and Setup
 Clone down this repository. You will need `node` and `npm` installed globally on your machine.
